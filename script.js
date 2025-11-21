@@ -60,13 +60,16 @@ function handleStart(type, value) {
 
 function handleFirstEntry(type, value) {
     if (type === "digit") {
-        calculator.firstOperand += value;
-        calculator.displayValue += value;
-        updateDisplayValue();
+        if (calculator.firstOperand.length === 11) {
+            alert("Digit limit reached.")
+        } else {
+            calculator.firstOperand += value;
+            calculator.displayValue += value;
+            updateDisplayValue();
+        }
     } else if (type === "operator") {
         calculator.operator = value;
         calculator.phase = 'opSelected';
-        // depress operator
     } else if (type === "clear") {
         resetCalculatorState();
         updateDisplayValue();
@@ -81,8 +84,6 @@ function handleOpSelected(type, value) {
         updateDisplayValue();
     } else if (type === 'operator') {
         calculator.operator = value;
-        // un-depress old operator
-        // depress new operator
     } else if (type === "clear") {
         resetCalculatorState();
         updateDisplayValue();
@@ -95,8 +96,12 @@ function handleSecondEntry(type, value) {
             calculator.secondOperand = value;
             calculator.displayValue = value; 
         } else {
-            calculator.secondOperand += value;
-            calculator.displayValue += value;
+            if (calculator.secondOperand.length === 11) {
+                alert("Digit limit reached.");
+            } else {
+                calculator.secondOperand += value;
+                calculator.displayValue += value;
+            }
         }
 
         updateDisplayValue();
@@ -172,7 +177,6 @@ function handleButtonClick(type, value) {
     }
 }
 
-// Implement button press handlers
 const allButtons = document.querySelectorAll("button");
 allButtons.forEach((button) => {
     const type = button.className;
@@ -181,7 +185,3 @@ allButtons.forEach((button) => {
         handleButtonClick(type, value); 
     });
 })
-
-// Implement error handling
-
-
